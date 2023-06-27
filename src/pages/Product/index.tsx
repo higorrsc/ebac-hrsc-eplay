@@ -4,6 +4,8 @@ import Hero from '../../components/Hero'
 import Section from '../../components/Section'
 import Gallery from '../../components/Gallery'
 
+import residentEvil from '../../assets/images/resident.png'
+
 const Product = () => {
   const { id } = useParams()
   return (
@@ -35,7 +37,7 @@ const Product = () => {
           <b>Idiomas:</b> O jogo oferece suporte a diversos idiomas
         </p>
       </Section>
-      <Gallery />
+      <Gallery defaultCover={residentEvil} name="Jogo Teste" />
     </>
   )
 }

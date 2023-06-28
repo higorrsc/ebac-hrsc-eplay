@@ -1,103 +1,52 @@
+import { useEffect, useState } from 'react'
+
 import ProductList from '../../components/ProductsList'
-import Game from '../../models/Game'
+
+import { Game } from '../Home'
 
 import resident from '../../assets/images/resident.png'
 import diablo from '../../assets/images/diablo.png'
 import zelda from '../../assets/images/zelda.png'
 import starWars from '../../assets/images/star_wars.png'
 
-const promocoes: Game[] = [
-  {
-    id: 1,
-    category: 'Ação',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, tempore?',
-    title: 'Resident Evil 4',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: resident
-  },
-  {
-    id: 2,
-    category: 'Ação',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, tempore?',
-    title: 'Resident Evil 4',
-    system: 'PS5',
-    infos: ['5%', 'R$ 290,00'],
-    image: resident
-  },
-  {
-    id: 3,
-    category: 'Ação',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, tempore?',
-    title: 'Resident Evil 4',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: resident
-  },
-  {
-    id: 4,
-    category: 'Ação',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, tempore?',
-    title: 'Resident Evil 4',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: resident
-  }
-]
-const emBreve: Game[] = [
-  {
-    id: 5,
-    category: 'RPG',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, tempore?',
-    title: 'Diablo 4',
-    system: 'Windows',
-    infos: ['17/05'],
-    image: diablo
-  },
-  {
-    id: 6,
-    category: 'RPG',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, tempore?',
-    title: 'Zelda',
-    system: 'Windows',
-    infos: ['17/05'],
-    image: zelda
-  },
-  {
-    id: 7,
-    category: 'Ação',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, tempore?',
-    title: 'Star Wars',
-    system: 'Windows',
-    infos: ['17/05'],
-    image: starWars
-  },
-  {
-    id: 8,
-    category: 'RPG',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, tempore?',
-    title: 'Resident Evil 4',
-    system: 'Nintendo Switch',
-    infos: ['17/05'],
-    image: resident
-  }
-]
+const Home = () => {
+  const [gamesAcao, setGamesAcao] = useState<Game[]>([])
+  const [gamesEsportes, setGamesEsportes] = useState<Game[]>([])
+  const [gamesSimulacao, setGamesSimulacao] = useState<Game[]>([])
+  const [gamesLuta, setGamesLuta] = useState<Game[]>([])
+  const [gamesRPG, setGamesRPG] = useState<Game[]>([])
 
-const Home = () => (
-  <>
-    <ProductList games={promocoes} title="RPG" background="gray" />
-    <ProductList games={emBreve} title="Ação" background="black" />
-    <ProductList games={promocoes} title="Aventura" background="gray" />
-    <ProductList games={emBreve} title="FPS" background="black" />
-  </>
-)
+  useEffect(() => {
+    fetch('https://fake-api-tau.vercel.app/api/eplay/acao')
+      .then((res) => res.json())
+      .then((res) => setGamesAcao(res))
+    fetch('https://fake-api-tau.vercel.app/api/eplay/esportes')
+      .then((res) => res.json())
+      .then((res) => setGamesEsportes(res))
+    fetch('https://fake-api-tau.vercel.app/api/eplay/simulacao')
+      .then((res) => res.json())
+      .then((res) => setGamesSimulacao(res))
+    fetch('https://fake-api-tau.vercel.app/api/eplay/luta')
+      .then((res) => res.json())
+      .then((res) => setGamesLuta(res))
+    fetch('https://fake-api-tau.vercel.app/api/eplay/rpg')
+      .then((res) => res.json())
+      .then((res) => setGamesRPG(res))
+  }, [])
+
+  return (
+    <>
+      <ProductList games={gamesAcao} title="Ação" background="black" />
+      <ProductList games={gamesEsportes} title="Esportes" background="gray" />
+      <ProductList
+        games={gamesSimulacao}
+        title="Simulação"
+        background="black"
+      />
+      <ProductList games={gamesLuta} title="Luta" background="gray" />
+      <ProductList games={gamesRPG} title="RPG" background="black" />
+    </>
+  )
+}
 
 export default Home

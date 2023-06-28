@@ -1,43 +1,51 @@
 import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 import Hero from '../../components/Hero'
 import Section from '../../components/Section'
 import Gallery from '../../components/Gallery'
 
 import residentEvil from '../../assets/images/resident.png'
+import { Game } from '../Home'
 
 const Product = () => {
   const { id } = useParams()
+
+  const [game, setGame] = useState<Game>()
+
+  useEffect(() => {
+    fetch(`https://fake-api-tau.vercel.app/api/eplay/jogos/${id}`)
+      .then((res) => res.json())
+      .then((res) => setGame(res))
+  }, [id])
+
+  if (!game) {
+    return <h3>Carregando...</h3>
+  }
+
   return (
     <>
-      <Hero />
+      <Hero game={game} />
       <Section title="Sobre o jogo" background="black">
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt
-          quo, reprehenderit iure esse perspiciatis voluptate deserunt possimus,
-          commodi, doloremque quae illo recusandae autem. Consequatur nisi
-          provident, placeat illo officia ut rem corrupti consequuntur expedita
-          illum itaque sapiente dicta pariatur ipsam repellendus fuga earum ex
-          quos quae et quibusdam odio exercitationem. Sed aspernatur libero quo,
-          deleniti sunt voluptatem rem corporis inventore ad impedit sapiente
-          odit qui voluptatibus facere dolor iure, vero, accusamus eos aperiam
-          omnis eaque unde tenetur quia? Exercitationem quisquam fuga autem,
-          placeat quas voluptate? Eligendi mollitia eius velit autem! Incidunt
-          pariatur quibusdam corrupti molestias totam nulla sequi suscipit
-          similique!
-        </p>
+        <p>{game.description}</p>
       </Section>
       <Section title="Mais detalhes" background="gray">
         <p>
-          <b>Plataforma:</b> Playstation 5<br />
-          <b>Desenvolvedor:</b> Avalanche Software
+          <b>Plataforma:</b> {game.details.system}
           <br />
-          <b>Editora:</b> Portkey Games
+          <b>Desenvolvedor:</b> {game.details.developer}
           <br />
-          <b>Idiomas:</b> O jogo oferece suporte a diversos idiomas
+          <b>Editora:</b> {game.details.publisher}
+          <br />
+          <b>Idiomas:</b> O jogo oferece suporte a diversos idiomas, incluindo{' '}
+          {game.details.languages.join(', ')}
         </p>
       </Section>
-      <Gallery defaultCover={residentEvil} name="Jogo Teste" />
+      <Gallery
+        defaultCover={game.media.cover}
+        name={game.name}
+        items={game.media.gallery}
+      />
     </>
   )
 }

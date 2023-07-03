@@ -5,8 +5,8 @@ import { TagContainer } from '../Tag/styles'
 export const Banner = styled.div`
   postion: relative;
   display: block;
-  height: 480px;
   width: 100%;
+  height: 480px;
 
   background-repeat: no-repeat;
   background-position: center;
@@ -30,12 +30,12 @@ export const Banner = styled.div`
   }
 
   .container {
-    z-index: 1;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    z-index: 1;
   }
 `
 

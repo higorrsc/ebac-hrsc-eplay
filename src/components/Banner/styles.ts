@@ -2,13 +2,30 @@ import styled from 'styled-components'
 import { TagContainer } from '../Tag/styles'
 
 export const Imagem = styled.div`
+  position: relative;
+  display: block;
   width: 100%;
   height: 560px;
-  display: block;
+
   background-repeat: no-repeat;
   background-size: cover;
+
   font-weight: bold;
-  position: relative;
+
+  &::after {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    content: '';
+  }
+
+  ${TagContainer} {
+    position: absolute;
+    top: 32px;
+  }
 
   .container {
     padding-top: 340px;
@@ -17,21 +34,6 @@ export const Imagem = styled.div`
     justify-content: space-between;
     align-items: flex-end;
     z-index: 1;
-  }
-
-  ${TagContainer} {
-    position: absolute;
-    top: 32px;
-  }
-
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    content: '';
   }
 `
 
